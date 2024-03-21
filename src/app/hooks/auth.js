@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import useSWR from "swr";
 
 export const useAuth = ({ middleware } = {}) => {
-
+    const router = useRouter();
     //Loading
     const [isLoading, setIsLoading] = useState(true);
 
@@ -27,7 +27,7 @@ export const useAuth = ({ middleware } = {}) => {
         setErrors([]);
         await csrf();
         axios.post("login", props)
-            .then(() => mutate() && Router.push("/dashboard"))
+            .then(() => mutate() && router.push("/dashboard"))
             .catch(error => {
                 if (error.response.status !== 409)
                     throw error;
@@ -48,8 +48,8 @@ export const useAuth = ({ middleware } = {}) => {
             setIsLoading(false);
         }
 
-        if (middleware === "guest" && user) Router.push("/");
-        if (middleware === "auth" && error) Router.push("/login")
+        if (middleware === "guest" && user) router.push("/dashboard");
+        if (middleware === "auth" && error) router.push("/login")
     })
 
     return {

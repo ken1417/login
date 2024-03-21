@@ -3,12 +3,21 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "../hooks/auth";
 
 const Login = () => {
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   // const session = useSession();
   const { data: session, status: sessionStatus } = useSession();
+
+  const { login, isLoading, user } = useAuth({ middleware: "guest" });
+
+  if (isLoading || user) {
+    return <>is loading ....</>;
+  }
 
   useEffect(() => {
     if (sessionStatus === "authenticated") {
