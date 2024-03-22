@@ -44,7 +44,7 @@ export const useAuth = ({ middleware } = {}) => {
         await axios.post("/logout");
 
         mutate(null);
-        router.push("/");
+        Router.push("/");
     }
 
     useEffect(() => {
