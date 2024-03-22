@@ -747,6 +747,10 @@ body {
   background-color: rgb(37 99 235 / var(--tw-bg-opacity));
 }
 
+.hover\:font-bold:hover {
+  font-weight: 700;
+}
+
 .hover\:underline:hover {
   text-decoration-line: underline;
 }

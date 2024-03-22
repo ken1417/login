@@ -16,7 +16,10 @@ export const useAuth = ({ middleware } = {}) => {
                     Authorization: "Bearer " + "3|NleRB4E75WnJBU4xT6DoxpygAWEENYBnVbg9Shxb7c951aac",
                 },
             })
-            .then(response => response.data.data)
+            .then(response => {
+                response.data.data
+                console.log(response.data.data)
+            })
             .catch(error => {
                 if (error.response.status !== 409)
                     throw error;
@@ -31,7 +34,10 @@ export const useAuth = ({ middleware } = {}) => {
         setErrors([]);
         await csrf();
         axios.post("login", props)
-            .then(() => mutate() && router.push("/dashboard"))
+            .then(() => {
+                mutate() && router.push("/dashboard")
+                console.log("success")
+            })
             .catch(error => {
                 if (error.response.status !== 409)
                     throw error;
@@ -44,7 +50,7 @@ export const useAuth = ({ middleware } = {}) => {
         await axios.post("/logout");
 
         mutate(null);
-        Router.push("/");
+        router.push("/");
     }
 
     useEffect(() => {

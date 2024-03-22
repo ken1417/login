@@ -18,9 +18,9 @@ const Login = () => {
   const { login, isLoading, user } = useAuth({ middleware: "guest" });
 
   //check loading and user
-  if (isLoading || user) {
-    return <>is loading ....</>;
-  }
+  // if (isLoading || user) {
+  //   return <>is loading ....</>;
+  // }
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
