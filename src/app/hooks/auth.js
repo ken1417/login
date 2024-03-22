@@ -1,5 +1,5 @@
 import axios from "../lib/axios";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 
@@ -9,9 +9,13 @@ export const useAuth = ({ middleware } = {}) => {
     const [isLoading, setIsLoading] = useState(true);
 
     //User
-    const { data: user, error, mutate } = useSWR("/api/v1/user",
+    const { data: user, error, mutate } = useSWR("/api/user",
         () => axios
-            .get("/api/v1/user")
+            .get("/api/user", {
+                headers: {
+                    Authorization: "Bearer " + "3|NleRB4E75WnJBU4xT6DoxpygAWEENYBnVbg9Shxb7c951aac",
+                },
+            })
             .then(response => response.data.data)
             .catch(error => {
                 if (error.response.status !== 409)
@@ -20,7 +24,7 @@ export const useAuth = ({ middleware } = {}) => {
     );
 
     //CSRF
-    const csrf = () => axios.get("/sanctum/csrf-cookie");
+    const csrf = () => axios.get("/sanctum/csrf-cookie")
 
     //Login
     const login = async ({ setErrors, ...props }) => {
@@ -40,7 +44,7 @@ export const useAuth = ({ middleware } = {}) => {
         await axios.post("/logout");
 
         mutate(null);
-        Router.push("/");
+        router.push("/");
     }
 
     useEffect(() => {
